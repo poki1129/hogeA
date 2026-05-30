@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --vh: 1vh;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-ink text-mist antialiased;
+}
+
+@supports (height: 100dvh) {
+  .min-h-screen-safe {
+    min-height: 100dvh;
+  }
+}
+
+.min-h-screen-safe {
+  min-height: calc(var(--vh, 1vh) * 100);
+}
+
+/* 控えめなスクロールバー（下部メニュー横スクロール用） */
+.thumb-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+.thumb-scroll::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-white/20;
+}
+.thumb-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+
+/* 上部ナビ（スマホ横スクロール） */
+.nav-menu-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+.nav-menu-scroll::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-white/20;
+}
+.nav-menu-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+
+/* ===========================================================================
+ * 全体スクロールバー（控えめ・ダーク基調）
+ * ======================================================================== */
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.06));
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.12));
+  background-clip: padding-box;
+}
+
+/* ===========================================================================
+ * テキストグラデーション（見出し用の上質なシマー）
+ * ======================================================================== */
+.text-gradient {
+  background: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(255, 255, 255, 1) 35%,
+    rgba(255, 255, 255, 0.7) 60%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: text-shimmer 9s linear infinite;
+}
+
+@keyframes text-shimmer {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* ===========================================================================
+ * reduced-motion 対応：アニメーションを大幅に抑制
+ * ======================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .text-gradient {
+    animation: none !important;
+  }
+}
