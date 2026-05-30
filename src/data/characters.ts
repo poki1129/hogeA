@@ -109,15 +109,15 @@ export function defineCharacter(input: CharacterInput): Character {
 export const characters: Character[] = [
   defineCharacter({
     id: "01",
-    name: "hico",
+    name: "Poki",
     nameReading: "ハンバーグ師匠",
     shortTagline: "ハンバーグください",
     heroDescription: "ハンバーグ",
-    vrchatAge: "1年目",
-    skills: "お刺身の見分け",
-    likesDislikes: "好き: ヘッドホン / 苦手: 空腹",
-    contactSns: "X: @example",
-    message: "東京までハンバーグ届けてください私今日お刺身だけだったんです",
+    vrchatAge: "5年目",
+    skills: "AIを使って遊ぶこと",
+    likesDislikes: "好き: マグロ / 苦手: イカ",
+    contactSns: "X: @vrpoki",
+    message: "最初はほんの出来心だったんです。",
     image: "/images/characters/01/character01-bg.jpg",
     gallery: [
       "/images/characters/01/character01-bg.jpg",
