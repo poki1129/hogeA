@@ -33,9 +33,9 @@ export const topSchedule: TopScheduleItem[] = [
 
 /** トップ左エリアの見出しなど */
 export const topLandingCopy = {
-  kicker: "ORIGINAL ARCHIVE",
-  title: "CHARACTER\nSHOWCASE",
-  lead: "全画面ビジュアルでキャラクターを紹介する公式風アーカイブ。下部のセレクトから展示モードへ切り替えられます。",
+  kicker: "April Fool's Day",
+  title: "VRChat Launge\nMs.shy-A",
+  lead: "喧騒を離れ、上質な夜へ。\nVRChat Launge「Ms.shy-A」\n大人のための隠れ家ラウンジ。",
 } as const;
 
 /**
