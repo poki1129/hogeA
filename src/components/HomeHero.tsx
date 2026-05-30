@@ -37,21 +37,10 @@ export function HomeHero() {
 
   const current: Character = characters[index]!;
 
-  // 切り替えを即座にするため、他キャラの背景も先読みする
+  // ホバー／タップした分だけ背景を先読み（全件一括先読みはしない＝帯域の取り合いを避ける）
   const [preloadIds, setPreloadIds] = useState<string[]>([]);
   const addPreload = useCallback((id: string) => {
     setPreloadIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
-  }, []);
-
-  useEffect(() => {
-    const warm = () => setPreloadIds(characters.map((c) => c.id));
-    const w = window as Window & { requestIdleCallback?: (cb: () => void) => number };
-    if (typeof w.requestIdleCallback === "function") {
-      w.requestIdleCallback(warm);
-    } else {
-      const t = setTimeout(warm, 1000);
-      return () => clearTimeout(t);
-    }
   }, []);
 
   const preloadSrcs = preloadIds
@@ -79,8 +68,7 @@ export function HomeHero() {
               src={current.imageBg}
               alt=""
               fill
-              priority={index === 0}
-              loading={index === 0 ? "eager" : "lazy"}
+              priority
               sizes="100vw"
               unoptimized={isRemoteImage(current.imageBg)}
               className="object-cover object-center"

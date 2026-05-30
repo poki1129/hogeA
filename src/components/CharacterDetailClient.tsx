@@ -7,12 +7,11 @@ import Link from "next/link";
 import { useRef } from "react";
 
 const rowDefs: { label: string; value: (c: Character) => string }[] = [
-  { label: "名前", value: (c) => c.name },
-  { label: "読み", value: (c) => c.nameReading },
-  { label: "年齢", value: (c) => (c.age === "" ? "" : `${c.age}`) },
-  { label: "身長", value: (c) => c.height },
-  { label: "好きなもの", value: (c) => c.likes },
-  { label: "キャッチコピー", value: (c) => c.catchphrase },
+  { label: "Name", value: (c) => c.name },
+  { label: "VRChat Age", value: (c) => c.vrchatAge },
+  { label: "Skills", value: (c) => c.skills },
+  { label: "Likes / Dislikes", value: (c) => c.likesDislikes },
+  { label: "Contact / SNS", value: (c) => c.contactSns },
 ];
 
 type Props = { character: Character };
@@ -30,14 +29,14 @@ export function CharacterDetailClient({ character: c }: Props) {
   const imgY = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
 
   return (
-    <div className="pb-24 pt-24 md:pt-28">
+    <div className="pb-16 pt-20 md:pt-24">
       <m.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
         className="relative mx-auto max-w-6xl px-6 md:px-10"
       >
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-start lg:gap-16">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-start lg:gap-12">
           <m.div
             ref={imgRef}
             initial={{ opacity: 0, y: 20 }}
@@ -63,7 +62,7 @@ export function CharacterDetailClient({ character: c }: Props) {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.75, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-              className="border-b border-white/[0.08] pb-8"
+              className="border-b border-white/[0.08] pb-5"
             >
               <p className="flex items-center gap-3 text-[10px] font-light tracking-[0.5em] text-white/40">
                 <span className="h-px w-8 bg-white/30" />
@@ -74,16 +73,16 @@ export function CharacterDetailClient({ character: c }: Props) {
               </h1>
             </m.header>
 
-            <dl className="mt-10 space-y-6">
+            <dl className="mt-6 space-y-3.5">
               {rows.map((row, i) => (
                 <m.div
                   key={row.label}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.55, delay: 0.2 + i * 0.05, ease: [0.22, 1, 0.36, 1] }}
-                  className="grid gap-2 border-b border-white/[0.05] pb-6 sm:grid-cols-[140px_1fr] sm:gap-8"
+                  className="grid gap-1.5 border-b border-white/[0.05] pb-3.5 sm:grid-cols-[180px_1fr] sm:gap-8"
                 >
-                  <dt className="text-[10px] font-light tracking-[0.35em] text-white/40">{row.label}</dt>
+                  <dt className="text-[10px] font-light uppercase tracking-[0.25em] text-white/40">{row.label}</dt>
                   <dd className="text-sm font-extralight leading-relaxed tracking-wide text-white/85">
                     {row.value}
                   </dd>
@@ -91,16 +90,16 @@ export function CharacterDetailClient({ character: c }: Props) {
               ))}
             </dl>
 
-            {c.introduction.trim() !== "" && (
+            {c.message.trim() !== "" && (
               <m.section
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.65, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                className="mt-12"
+                className="mt-8"
               >
-                <h2 className="text-[10px] font-light tracking-[0.45em] text-white/40">紹介文</h2>
-                <div className="mt-4 space-y-4 text-sm font-extralight leading-[1.9] tracking-wide text-white/70">
-                  {c.introduction.split("\n\n").map((para, idx) => (
+                <h2 className="text-[10px] font-light uppercase tracking-[0.45em] text-white/40">Message</h2>
+                <div className="mt-3 space-y-3 text-sm font-extralight leading-[1.8] tracking-wide text-white/70">
+                  {c.message.split("\n\n").map((para, idx) => (
                     <p key={idx}>{para}</p>
                   ))}
                 </div>
@@ -112,10 +111,10 @@ export function CharacterDetailClient({ character: c }: Props) {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                className="mt-14"
+                className="mt-10"
               >
                 <h2 className="text-[10px] font-light tracking-[0.45em] text-white/40">GALLERY</h2>
-                <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
+                <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
                   {c.gallery.map((src, idx) => (
                     <div
                       key={`${c.id}-gallery-${idx}`}
@@ -139,7 +138,7 @@ export function CharacterDetailClient({ character: c }: Props) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.65 }}
-              className="mt-14"
+              className="mt-10"
             >
               <Link
                 href="/"

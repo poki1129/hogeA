@@ -41,18 +41,10 @@ export function HomeTopLanding() {
     window.scrollTo(0, 0);
   }, []);
 
-  // 表示モード（/spotlight）のコードと全キャラの背景画像を、
-  // ページが落ち着いた頃にバックグラウンドで先読みしておく。
+  // 表示モード（/spotlight）のコードだけ先読み。
+  // 背景画像はホバー／タップした分だけ先読みする（全件一括先読みは帯域を食い合うのでしない）。
   useEffect(() => {
     router.prefetch("/spotlight");
-    const warm = () => setPreloadIds(characters.map((c) => c.id));
-    const w = window as Window & { requestIdleCallback?: (cb: () => void) => number };
-    if (typeof w.requestIdleCallback === "function") {
-      w.requestIdleCallback(warm);
-    } else {
-      const t = setTimeout(warm, 1200);
-      return () => clearTimeout(t);
-    }
   }, [router]);
 
   const preloadSrcs = preloadIds
