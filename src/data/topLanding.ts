@@ -65,6 +65,8 @@ export type TopBackground =
   | { type: "image"; src: string; overlay?: number; position?: string };
 
 export const topBackground: TopBackground = {
-  type: "color",
-  color: "#0a0a0a",
+   type: "image",
+  src: "/images/top-bg.jpg",
+  overlay: 0.45,
+   position: "center",
 };
