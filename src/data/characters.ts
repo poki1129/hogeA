@@ -26,22 +26,27 @@
 export type Character = {
   /** URL スラッグ（例: "01" → /characters/01） */
   id: string;
-  /** 表示名 */
+  /** 表示名（Name） */
   name: string;
-  /** 読み（ひらがな・カタカナなど） */
+  /** 読み（ひらがな・カタカナなど。詳細ページには表示しません） */
   nameReading: string;
   /** トップヒーロー用の短い一行 */
   shortTagline: string;
   /** トップに載せる短い説明 */
   heroDescription: string;
-  /** 年齢（未設定なら空文字で非表示） */
-  age: number | "";
-  /** 表示用（例: "162cm"） */
-  height: string;
-  likes: string;
-  catchphrase: string;
-  /** 詳細ページの紹介文（段落は \n\n で区切る） */
-  introduction: string;
+
+  // --- 詳細ページ（DETAIL）の項目。未設定（空文字）の行は自動で非表示になります ---
+  /** VRChat Age（VRChatでの年数など） */
+  vrchatAge: string;
+  /** Skills（特技・できること） */
+  skills: string;
+  /** Likes / Dislikes（好き / 苦手） */
+  likesDislikes: string;
+  /** Contact / SNS（連絡先・SNSリンクなど） */
+  contactSns: string;
+  /** Message（自由記述の長文。段落は \n\n で区切る） */
+  message: string;
+
   /** トップ背景（全画面） */
   imageBg: string;
   /** 詳細ページ メイン立ち絵など */
@@ -64,11 +69,11 @@ export type CharacterInput = {
   nameReading?: string;
   shortTagline?: string;
   heroDescription?: string;
-  age?: number | "";
-  height?: string;
-  likes?: string;
-  catchphrase?: string;
-  introduction?: string;
+  vrchatAge?: string;
+  skills?: string;
+  likesDislikes?: string;
+  contactSns?: string;
+  message?: string;
   imageBg?: string;
   imageMain?: string;
   imageThumb?: string;
@@ -89,11 +94,11 @@ export function defineCharacter(input: CharacterInput): Character {
     nameReading: input.nameReading ?? "",
     shortTagline: input.shortTagline ?? "",
     heroDescription: input.heroDescription ?? "",
-    age: input.age ?? "",
-    height: input.height ?? "",
-    likes: input.likes ?? "",
-    catchphrase: input.catchphrase ?? "",
-    introduction: input.introduction ?? "",
+    vrchatAge: input.vrchatAge ?? "",
+    skills: input.skills ?? "",
+    likesDislikes: input.likesDislikes ?? "",
+    contactSns: input.contactSns ?? "",
+    message: input.message ?? "",
     imageBg: input.imageBg ?? fallback,
     imageMain: input.imageMain ?? fallback,
     imageThumb: input.imageThumb ?? input.imageBg ?? fallback,
@@ -103,16 +108,16 @@ export function defineCharacter(input: CharacterInput): Character {
 
 export const characters: Character[] = [
   defineCharacter({
-    id: "04",
+    id: "01",
     name: "hico",
     nameReading: "ハンバーグ師匠",
     shortTagline: "ハンバーグください",
     heroDescription: "ハンバーグ",
-    age: 5,
-    height: "50cm",
-    likes: "ヘッドホン、図書館",
-    catchphrase: "おなかすいた",
-    introduction: "東京までハンバーグ届けてください私今日お刺身だけだったんです",
+    vrchatAge: "1年目",
+    skills: "お刺身の見分け",
+    likesDislikes: "好き: ヘッドホン / 苦手: 空腹",
+    contactSns: "X: @example",
+    message: "東京までハンバーグ届けてください私今日お刺身だけだったんです",
     image: "/images/characters/01/character01-bg.jpg",
     gallery: [
       "/images/characters/01/character01-bg.jpg",
@@ -121,16 +126,16 @@ export const characters: Character[] = [
     ],
   }),
   defineCharacter({
-    id: "05",
+    id: "02",
     name: "hico",
     nameReading: "ハンバーグ師匠",
     shortTagline: "ハンバーグください",
     heroDescription: "ハンバーグ",
-    age: 5,
-    height: "50cm",
-    likes: "ヘッドホン、図書館",
-    catchphrase: "おなかすいた",
-    introduction: "東京までハンバーグ届けてください私今日お刺身だけだったんです",
+    vrchatAge: "1年目",
+    skills: "お刺身の見分け",
+    likesDislikes: "好き: ヘッドホン / 苦手: 空腹",
+    contactSns: "X: @example",
+    message: "東京までハンバーグ届けてください私今日お刺身だけだったんです",
     image: "/images/characters/02/character02-bg.jpg",
     gallery: [
       "/images/characters/02/character02-bg.jpg",
@@ -139,16 +144,16 @@ export const characters: Character[] = [
     ],
   }),
   defineCharacter({
-    id: "06",
+    id: "03",
     name: "hico",
     nameReading: "ハンバーグ師匠",
     shortTagline: "ハンバーグください",
     heroDescription: "ハンバーグ",
-    age: 5,
-    height: "50cm",
-    likes: "ヘッドホン、図書館",
-    catchphrase: "おなかすいた",
-    introduction: "東京までハンバーグ届けてください私今日お刺身だけだったんです",
+    vrchatAge: "1年目",
+    skills: "お刺身の見分け",
+    likesDislikes: "好き: ヘッドホン / 苦手: 空腹",
+    contactSns: "X: @example",
+    message: "東京までハンバーグ届けてください私今日お刺身だけだったんです",
     image: "/images/characters/03/character02-bg.jpg",
     gallery: [
       "/images/characters/03/character02-bg.jpg",
@@ -157,16 +162,16 @@ export const characters: Character[] = [
     ],
   }),
   defineCharacter({
-    id: "07",
+    id: "04",
     name: "hico",
     nameReading: "ハンバーグ師匠",
     shortTagline: "ハンバーグください",
     heroDescription: "ハンバーグ",
-    age: 5,
-    height: "50cm",
-    likes: "ヘッドホン、図書館",
-    catchphrase: "おなかすいた",
-    introduction: "東京までハンバーグ届けてください私今日お刺身だけだったんです",
+    vrchatAge: "1年目",
+    skills: "お刺身の見分け",
+    likesDislikes: "好き: ヘッドホン / 苦手: 空腹",
+    contactSns: "X: @example",
+    message: "東京までハンバーグ届けてください私今日お刺身だけだったんです",
     image: "/images/characters/04/character02-bg.jpg",
     gallery: [
       "/images/characters/04/character02-bg.jpg",
@@ -175,16 +180,16 @@ export const characters: Character[] = [
     ],
   }),
   defineCharacter({
-    id: "08",
+    id: "05",
     name: "hico",
     nameReading: "ハンバーグ師匠",
     shortTagline: "ハンバーグください",
     heroDescription: "ハンバーグ",
-    age: 5,
-    height: "50cm",
-    likes: "ヘッドホン、図書館",
-    catchphrase: "おなかすいた",
-    introduction: "東京までハンバーグ届けてください私今日お刺身だけだったんです",
+    vrchatAge: "1年目",
+    skills: "お刺身の見分け",
+    likesDislikes: "好き: ヘッドホン / 苦手: 空腹",
+    contactSns: "X: @example",
+    message: "東京までハンバーグ届けてください私今日お刺身だけだったんです",
     image: "/images/characters/05/character02-bg.jpg",
     gallery: [
       "/images/characters/05/character02-bg.jpg",
@@ -193,16 +198,16 @@ export const characters: Character[] = [
     ],
   }),
   defineCharacter({
-    id: "09",
+    id: "06",
     name: "hico",
     nameReading: "ハンバーグ師匠",
     shortTagline: "ハンバーグください",
     heroDescription: "ハンバーグ",
-    age: 5,
-    height: "50cm",
-    likes: "ヘッドホン、図書館",
-    catchphrase: "おなかすいた",
-    introduction: "東京までハンバーグ届けてください私今日お刺身だけだったんです",
+    vrchatAge: "1年目",
+    skills: "お刺身の見分け",
+    likesDislikes: "好き: ヘッドホン / 苦手: 空腹",
+    contactSns: "X: @example",
+    message: "東京までハンバーグ届けてください私今日お刺身だけだったんです",
     image: "/images/characters/06/character02-bg.jpg",
     gallery: [
       "/images/characters/06/character02-bg.jpg",
@@ -211,129 +216,21 @@ export const characters: Character[] = [
     ],
   }),
   defineCharacter({
-    id: "10",
+    id: "7",
     name: "hico",
     nameReading: "ハンバーグ師匠",
     shortTagline: "ハンバーグください",
     heroDescription: "ハンバーグ",
-    age: 5,
-    height: "50cm",
-    likes: "ヘッドホン、図書館",
-    catchphrase: "おなかすいた",
-    introduction: "東京までハンバーグ届けてください私今日お刺身だけだったんです",
+    vrchatAge: "1年目",
+    skills: "お刺身の見分け",
+    likesDislikes: "好き: ヘッドホン / 苦手: 空腹",
+    contactSns: "X: @example",
+    message: "東京までハンバーグ届けてください私今日お刺身だけだったんです",
     image: "/images/characters/07/character02-bg.jpg",
     gallery: [
       "/images/characters/07/character02-bg.jpg",
       "/images/characters/07/character02-bg.jpg",
       "/images/characters/07/character02-bg.jpg",
-    ],
-  }),
-  defineCharacter({
-    id: "11",
-    name: "hico",
-    nameReading: "ハンバーグ師匠",
-    shortTagline: "ハンバーグください",
-    heroDescription: "ハンバーグ",
-    age: 5,
-    height: "50cm",
-    likes: "ヘッドホン、図書館",
-    catchphrase: "おなかすいた",
-    introduction: "東京までハンバーグ届けてください私今日お刺身だけだったんです",
-    image: "/images/characters/08/character02-bg.jpg",
-    gallery: [
-      "/images/characters/08/character02-bg.jpg",
-      "/images/characters/08/character02-bg.jpg",
-      "/images/characters/08/character02-bg.jpg",
-    ],
-  }),
-  defineCharacter({
-    id: "12",
-    name: "hico",
-    nameReading: "ハンバーグ師匠",
-    shortTagline: "ハンバーグください",
-    heroDescription: "ハンバーグ",
-    age: 5,
-    height: "50cm",
-    likes: "ヘッドホン、図書館",
-    catchphrase: "おなかすいた",
-    introduction: "東京までハンバーグ届けてください私今日お刺身だけだったんです",
-    image: "/images/characters/09/character02-bg.jpg",
-    gallery: [
-      "/images/characters/09/character02-bg.jpg",
-      "/images/characters/09/character02-bg.jpg",
-      "/images/characters/09/character02-bg.jpg",
-    ],
-  }),
-  defineCharacter({
-    id: "13",
-    name: "hico",
-    nameReading: "ハンバーグ師匠",
-    shortTagline: "ハンバーグください",
-    heroDescription: "ハンバーグ",
-    age: 5,
-    height: "50cm",
-    likes: "ヘッドホン、図書館",
-    catchphrase: "おなかすいた",
-    introduction: "東京までハンバーグ届けてください私今日お刺身だけだったんです",
-    image: "/images/characters/10/character02-bg.jpg",
-    gallery: [
-      "/images/characters/10/character02-bg.jpg",
-      "/images/characters/10/character02-bg.jpg",
-      "/images/characters/10/character02-bg.jpg",
-    ],
-  }),
-  defineCharacter({
-    id: "14",
-    name: "hico",
-    nameReading: "ハンバーグ師匠",
-    shortTagline: "ハンバーグください",
-    heroDescription: "ハンバーグ",
-    age: 5,
-    height: "50cm",
-    likes: "ヘッドホン、図書館",
-    catchphrase: "おなかすいた",
-    introduction: "東京までハンバーグ届けてください私今日お刺身だけだったんです",
-    image: "/images/characters/11/character02-bg.jpg",
-    gallery: [
-      "/images/characters/11/character02-bg.jpg",
-      "/images/characters/11/character02-bg.jpg",
-      "/images/characters/11/character02-bg.jpg",
-    ],
-  }),
-  defineCharacter({
-    id: "15",
-    name: "hico",
-    nameReading: "ハンバーグ師匠",
-    shortTagline: "ハンバーグください",
-    heroDescription: "ハンバーグ",
-    age: 5,
-    height: "50cm",
-    likes: "ヘッドホン、図書館",
-    catchphrase: "おなかすいた",
-    introduction: "東京までハンバーグ届けてください私今日お刺身だけだったんです",
-    image: "/images/characters/12/character02-bg.jpg",
-    gallery: [
-      "/images/characters/12/character02-bg.jpg",
-      "/images/characters/12/character02-bg.jpg",
-      "/images/characters/12/character02-bg.jpg",
-    ],
-  }),
-  defineCharacter({
-    id: "16",
-    name: "hico",
-    nameReading: "ハンバーグ師匠",
-    shortTagline: "ハンバーグください",
-    heroDescription: "ハンバーグ",
-    age: 5,
-    height: "50cm",
-    likes: "ヘッドホン、図書館",
-    catchphrase: "おなかすいた",
-    introduction: "東京までハンバーグ届けてください私今日お刺身だけだったんです",
-    image: "/images/characters/13/character02-bg.jpg",
-    gallery: [
-      "/images/characters/13/character02-bg.jpg",
-      "/images/characters/13/character02-bg.jpg",
-      "/images/characters/13/character02-bg.jpg",
     ],
   }),
 
@@ -346,14 +243,15 @@ export const characters: Character[] = [
   //   id: "05",                                   // 必須: URL用の番号やスラッグ（重複NG）
   //   name: "新しいキャラ",                         // 必須: 表示名
   //   image: "/images/characters/05/main.jpg",    // 必須: 代表画像（背景・立ち絵・サムネ共通）
-  //   nameReading: "あたらしいきゃら",              // 任意
-  //   shortTagline: "ひとこと紹介",                 // 任意
-  //   heroDescription: "トップに出る短い説明",       // 任意
-  //   age: 20,                                     // 任意
-  //   height: "160cm",                             // 任意
-  //   likes: "好きなもの",                          // 任意
-  //   catchphrase: "キャッチコピー",                // 任意
-  //   introduction: "詳細ページの紹介文。\n\n段落は空行で区切れます。", // 任意
+  //   nameReading: "あたらしいきゃら",              // 任意（詳細ページには非表示）
+  //   shortTagline: "ひとこと紹介",                 // 任意（トップ用）
+  //   heroDescription: "トップに出る短い説明",       // 任意（トップ用）
+  //   // --- 以下は DETAIL ページの項目（空欄の行は自動で非表示） ---
+  //   vrchatAge: "2年目",                          // VRChat Age
+  //   skills: "特技",                               // Skills
+  //   likesDislikes: "好き: ○○ / 苦手: △△",        // Likes / Dislikes
+  //   contactSns: "X: @your_id",                   // Contact / SNS
+  //   message: "自由記述のメッセージ。\n\n段落は空行で区切れます。", // Message
   //   // imageBg / imageMain / imageThumb を個別指定したい場合のみ:
   //   // imageBg: "/images/characters/05/bg.jpg",
   //   // imageMain: "/images/characters/05/main.jpg",
