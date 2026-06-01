@@ -6,6 +6,8 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 
+const EASE = [0.22, 1, 0.36, 1] as const;
+
 type Props = {
   characters: Character[];
   activeId: string;
@@ -15,9 +17,28 @@ type Props = {
 };
 
 export function CharacterStrip({ characters, activeId, onSelect, onPreload }: Props) {
+  const rootRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   // 横にあふれている（スクロールが必要）かどうか
   const [overflowing, setOverflowing] = useState(false);
+
+  // 下部バー（SELECT CHARACTER）の実際の高さを CSS 変数 --strip-h に反映。
+  // これを使ってスケジュール側のスクロール領域・余白を確保し、干渉を防ぐ。
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    const setVar = () =>
+      document.documentElement.style.setProperty("--strip-h", `${el.offsetHeight}px`);
+    setVar();
+    const ro = new ResizeObserver(setVar);
+    ro.observe(el);
+    window.addEventListener("resize", setVar);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", setVar);
+      document.documentElement.style.removeProperty("--strip-h");
+    };
+  }, []);
 
   // 実際に収まりきらない場合のみ「左寄せ＋スクロール」、収まるなら中央寄せ
   useEffect(() => {
@@ -53,32 +74,46 @@ export function CharacterStrip({ characters, activeId, onSelect, onPreload }: Pr
   }, []);
 
   return (
-    <div className="pointer-events-auto fixed bottom-0 left-0 right-0 z-20 border-t border-white/[0.06] bg-gradient-to-t from-black via-black/90 to-transparent pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-10">
+    <div
+      ref={rootRef}
+      className="pointer-events-auto fixed bottom-0 left-0 right-0 z-20 border-t border-white/[0.06] bg-gradient-to-t from-black via-black/90 to-transparent pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-10"
+    >
       <div className="mx-auto max-w-6xl px-4">
         <p className="mb-3 hidden text-center text-[9px] font-light tracking-[0.5em] text-white/35 md:block">
           SELECT CHARACTER
         </p>
-        <div
+        <m.div
           ref={scrollRef}
           className={cn(
             "thumb-scroll flex gap-3 overflow-x-auto pb-1",
             // 収まりきらないときだけ左寄せ＋スクロール。収まるなら中央寄せ
             overflowing ? "justify-start" : "justify-center",
           )}
+          initial="hidden"
+          animate="show"
+          variants={{
+            hidden: {},
+            // 右端のカードから順に表示し、左へ流れてくる（カードを配るような）演出
+            show: { transition: { staggerChildren: 0.07, staggerDirection: -1, delayChildren: 0.25 } },
+          }}
         >
           {characters.map((c) => {
             const active = c.id === activeId;
             const thumb = c.imageThumb ?? c.imageBg;
             return (
-              <button
+              <m.button
                 key={c.id}
                 type="button"
                 onClick={() => onSelect(c.id)}
                 onMouseEnter={() => onPreload?.(c.id)}
                 onFocus={() => onPreload?.(c.id)}
                 onPointerDown={() => onPreload?.(c.id)}
+                variants={{
+                  hidden: { opacity: 0, x: 64, rotate: -5 },
+                  show: { opacity: 1, x: 0, rotate: 0, transition: { duration: 0.55, ease: EASE } },
+                }}
                 className={cn(
-                  "group relative shrink-0 overflow-hidden rounded-sm border transition duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                  "group relative shrink-0 overflow-hidden rounded-sm border transition-[border-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
                   active
                     ? "border-white/45 shadow-[0_0_32px_rgba(255,255,255,0.12)]"
                     : "border-white/10 hover:border-white/30",
@@ -118,10 +153,10 @@ export function CharacterStrip({ characters, activeId, onSelect, onPreload }: Pr
                     {c.name}
                   </span>
                 </div>
-              </button>
+              </m.button>
             );
           })}
-        </div>
+        </m.div>
       </div>
     </div>
   );

@@ -52,6 +52,7 @@ export function HomeTopLanding() {
     .filter((src): src is string => Boolean(src));
 
   const titleLines = topLandingCopy.title.split("\n");
+  const leadLines = topLandingCopy.lead.split("\n");
 
   return (
     <section className="relative min-h-screen-safe overflow-hidden">
@@ -118,32 +119,41 @@ export function HomeTopLanding() {
             className="mt-8 max-w-md text-sm font-extralight leading-relaxed tracking-wide text-white/60"
             variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE } } }}
           >
-            {topLandingCopy.lead}
+            {/* topLandingCopy.lead の改行（\n）ごとに 1 行で表示。
+                3 行程度までスタイルを保ったまま自由にカスタマイズ可能。 */}
+            {leadLines.map((line, i) => (
+              <span key={i} className="block">
+                {line}
+              </span>
+            ))}
           </m.p>
-
-          <m.div
-            className="mt-10 flex items-center gap-3 text-[10px] font-light tracking-[0.4em] text-white/35"
-            variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { duration: 1, delay: 0.2 } } }}
-          >
-            <m.span
-              className="inline-block h-1.5 w-1.5 rounded-full bg-white/50"
-              animate={{ opacity: [0.3, 1, 0.3], scale: [1, 1.4, 1] }}
-              transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-            />
-            SCROLL TO SELECT
-          </m.div>
         </m.div>
 
         <m.aside
           initial={{ opacity: 0, x: 24 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.3, ease: EASE }}
-          className="flex w-full shrink-0 flex-col border-t border-white/[0.07] bg-black/30 px-6 pb-44 pt-8 backdrop-blur-md md:w-[min(100%,20rem)] md:border-l md:border-t-0 md:px-5 md:pb-0 md:pt-0"
+          className="flex w-full shrink-0 flex-col border-t border-white/[0.07] bg-black/30 px-6 pb-[calc(var(--strip-h,9rem)+1.5rem)] pt-8 backdrop-blur-md md:w-[min(100%,20rem)] md:border-l md:border-t-0 md:px-5 md:pb-0 md:pt-0"
         >
-          <div className="flex min-h-[min(40vh,20rem)] flex-1 flex-col gap-0 md:sticky md:top-0 md:max-h-[calc(100svh-11rem)] md:min-h-0 md:flex-none md:pb-32 md:pt-24">
+          {/* 下部バー（SELECT CHARACTER）の実測高さ var(--strip-h) を差し引いて
+              スケジュールのスクロール領域を確保し、バーへの干渉を防ぐ */}
+          <div className="flex min-h-[min(40vh,20rem)] flex-1 flex-col gap-0 md:sticky md:top-0 md:max-h-[calc(100svh-var(--strip-h,9rem)-2.5rem)] md:min-h-0 md:flex-none md:pb-6 md:pt-24">
             <section className="flex min-h-0 flex-1 flex-col">
-              <h2 className="shrink-0 text-[10px] font-light tracking-[0.45em] text-white/40">SCHEDULE</h2>
-              <ul className="mt-4 min-h-0 flex-1 space-y-4 overflow-y-auto pr-1 text-sm font-extralight leading-snug text-white/70">
+              <m.h2
+                className="flex shrink-0 items-center gap-2.5 text-[10px] font-light tracking-[0.45em] text-white/40"
+                initial={{ opacity: 0, x: 12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.4, ease: EASE }}
+              >
+                <m.span
+                  aria-hidden
+                  className="inline-block h-px w-6 origin-left bg-white/25"
+                  animate={{ scaleX: [1, 1.7, 1], opacity: [0.4, 0.85, 0.4] }}
+                  transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
+                />
+                SCHEDULE
+              </m.h2>
+              <ul className="mt-4 min-h-0 flex-1 space-y-4 overflow-y-auto overflow-x-hidden pr-1 text-sm font-extralight leading-snug text-white/70">
                 {topSchedule.map((row, i) => (
                   <m.li
                     key={i}

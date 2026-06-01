@@ -29,7 +29,7 @@ export function CharacterDetailClient({ character: c }: Props) {
   const imgY = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
 
   return (
-    <div className="pb-16 pt-20 md:pt-24">
+    <div className="pb-24 pt-28 md:pt-32">
       <m.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

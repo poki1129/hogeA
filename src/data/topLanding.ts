@@ -1,25 +1,31 @@
 /**
  * トップランディング（/）右カラム用のデータ
  * =============================================================================
- * ◆ スケジュールの編集はここだけ ◆
- *   下の `topSchedule` 配列を書き換えるだけで、トップのスケジュールが変わります。
- *   1行＝1つの予定。上から順に表示されます。
+ * ◆◆ スケジュールの編集はここだけ ◆◆
+ *   下の `topSchedule` 配列を書き換えるだけで、トップの SCHEDULE が変わります。
+ *   { } が 1 行（1 予定）。上から順に表示されます。
  *
- *   例:
- *     { date: "5/31", time: "21:00～24:00", name: "hico", status: "出勤" },
- *     { date: "5/31", time: "21:00～24:00", name: "poki", status: "出勤" },
+ *   ・予定を増やす  → { ... }, の行をコピーして増やす（行数は何件でもOK）
+ *   ・予定を減らす  → 不要な { ... }, の行を消す
+ *   ・並び順を変える → 行を上下に入れ替える
  *
- *   ・status は省略可（書かなければ表示されません）
- *   ・time も省略可
+ *   各項目の意味:
+ *     date   … 日付（必須）         例: "6/1"
+ *     time   … 時間帯（省略可）     例: "21:00～24:00"  ← 書かなければ非表示
+ *     name   … キャスト名（必須）   例: "美咲"
+ *     status … 状態（省略可）       例: "出勤" / "店長" / "GUEST" ← 書かなければ非表示
+ *
+ *   ※ 件数が多くて入りきらない場合は、SCHEDULE 内で自動的にスクロールします
+ *     （下部の SELECT CHARACTER には干渉しません）。
  * =============================================================================
  */
 
 export type TopScheduleItem = {
-  /** 日付（例: "5/31"） */
+  /** 日付（例: "6/1"）。必須 */
   date: string;
   /** 時間帯（例: "21:00～24:00"）。省略可 */
   time?: string;
-  /** 名前（例: "hico"） */
+  /** キャスト名（例: "美咲"）。必須 */
   name: string;
   /** 状態（例: "出勤"）。省略可 */
   status?: string;
@@ -27,15 +33,31 @@ export type TopScheduleItem = {
 
 /** スケジュール一覧（上から順に表示）。ここを自由に編集してください */
 export const topSchedule: TopScheduleItem[] = [
-  { date: "5/31", time: "21:00～24:00", name: "hico", status: "出勤" },
-  { date: "5/31", time: "21:00～24:00", name: "poki", status: "出勤" },
+  { date: "6/1", time: "20:00～26:00", name: "美咲", status: "出勤" },
+  { date: "6/1", time: "20:00～26:00", name: "玲奈", status: "出勤" },
+  { date: "6/1", time: "21:00～26:00", name: "彩花" },
+  { date: "6/2", time: "20:00～26:00", name: "詩織", status: "出勤" },
+  { date: "6/2", time: "21:00～26:00", name: "莉子" },
+  { date: "6/3", time: "20:00～26:00", name: "麗", status: "店長" },
+  { date: "6/3", time: "21:00～25:00", name: "真由", status: "出勤" },
+  { date: "6/5", time: "20:00～26:00", name: "美咲", status: "GUEST" },
+  { date: "6/6", time: "21:00～26:00", name: "玲奈" },
 ];
 
-/** トップ左エリアの見出しなど */
+/**
+ * トップ左エリアの見出しなど
+ *
+ * ◆ lead（説明文）の改行について ◆
+ *   "\n" を入れた箇所で改行されます。1〜3 行程度を想定。
+ *   行を増やしたいときは "\n" で区切って書いてください。
+ *   例（3 行）:
+ *     lead: "喧騒を離れ、上質な夜へ。\nVRChat Launge「Ms.shy-A」\n大人のための隠れ家ラウンジ。"
+ *   1 行にしたいときは "\n" を入れずに書けば OK です。
+ */
 export const topLandingCopy = {
   kicker: "April Fool's Day",
-  title: "VRChat Launge\nMs.shy-A",
-  lead: "喧騒を離れ、上質な夜へ。\nVRChat Launge「Ms.shy-A」\n大人のための隠れ家ラウンジ。",
+  title: "Launge\nTEST",
+  lead: "喧騒を離れ、上質な夜へ。\n Launge「test」\n大人のための隠れ家ラウンジ。",
 } as const;
 
 /**
@@ -65,6 +87,8 @@ export type TopBackground =
   | { type: "image"; src: string; overlay?: number; position?: string };
 
 export const topBackground: TopBackground = {
-  type: "color",
-  color: "#0a0a0a",
+  type: "image",
+  src: "/images/top-bg.png",
+  overlay: 0.5, // 文字を読みやすくする暗さ（0=なし〜1=真っ黒）
+  position: "center",
 };

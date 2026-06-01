@@ -1,4 +1,5 @@
 import { HoverTopNav } from "@/components/HoverTopNav";
+import { SiteFooter } from "@/components/SiteFooter";
 import { AmbientBackground } from "@/components/motion/AmbientBackground";
 import { MotionProvider } from "@/components/motion/MotionProvider";
 import type { Metadata } from "next";
@@ -19,12 +20,29 @@ const display = Zen_Old_Mincho({
   display: "swap",
 });
 
+const SITE_NAME = "ORIGINAL CHARACTER ARCHIVE";
+const SITE_DESCRIPTION = "オリジナルキャラクターの世界観と造形美を静かに提示する公式アーカイブ。";
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://example.com"),
   title: {
-    default: "ORIGINAL CHARACTER ARCHIVE",
+    default: SITE_NAME,
     template: "%s — CHARACTER ARCHIVE",
   },
-  description: "オリジナルキャラクターの公式紹介サイト。",
+  description: SITE_DESCRIPTION,
+  applicationName: "CHARACTER ARCHIVE",
+  openGraph: {
+    type: "website",
+    locale: "ja_JP",
+    siteName: "CHARACTER ARCHIVE",
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -35,6 +53,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <AmbientBackground />
           <HoverTopNav />
           <div className="relative z-10">{children}</div>
+          <SiteFooter />
+          {/* 全面に薄く重ねるフィルムグレイン（質感の上乗せ・操作は透過） */}
+          <div aria-hidden className="grain pointer-events-none fixed inset-0 z-30" />
         </MotionProvider>
       </body>
     </html>
