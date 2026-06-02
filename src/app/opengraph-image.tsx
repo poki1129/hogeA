@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "ORIGINAL CHARACTER ARCHIVE";
+export const alt = "OFFICIAL LOUNGE ARCHIVE";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -35,7 +35,7 @@ export default function OpengraphImage() {
           }}
         >
           <div style={{ width: "56px", height: "1px", background: "rgba(255,255,255,0.45)" }} />
-          ORIGINAL CHARACTER
+          OFFICIAL LOUNGE ARCHIVE
         </div>
 
         <div
@@ -49,8 +49,8 @@ export default function OpengraphImage() {
             color: "rgba(255,255,255,0.96)",
           }}
         >
-          <div style={{ display: "flex" }}>CHARACTER</div>
-          <div style={{ display: "flex" }}>ARCHIVE</div>
+          <div style={{ display: "flex" }}>OFFICIAL</div>
+          <div style={{ display: "flex" }}>LOUNGE</div>
         </div>
 
         <div
@@ -62,7 +62,7 @@ export default function OpengraphImage() {
             fontFamily: "Arial, sans-serif",
           }}
         >
-          A QUIET ARCHIVE OF ORIGINAL CHARACTERS
+          A QUIET, REFINED LOUNGE ARCHIVE
         </div>
       </div>
     ),

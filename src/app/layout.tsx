@@ -20,21 +20,21 @@ const display = Zen_Old_Mincho({
   display: "swap",
 });
 
-const SITE_NAME = "ORIGINAL CHARACTER ARCHIVE";
-const SITE_DESCRIPTION = "オリジナルキャラクターの世界観と造形美を静かに提示する公式アーカイブ。";
+const SITE_NAME = "OFFICIAL LOUNGE ARCHIVE";
+const SITE_DESCRIPTION = "世界観と造形美を静かに提示する公式アーカイブ。";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://example.com"),
   title: {
     default: SITE_NAME,
-    template: "%s — CHARACTER ARCHIVE",
+    template: "%s — OFFICIAL LOUNGE",
   },
   description: SITE_DESCRIPTION,
-  applicationName: "CHARACTER ARCHIVE",
+  applicationName: "OFFICIAL LOUNGE",
   openGraph: {
     type: "website",
     locale: "ja_JP",
-    siteName: "CHARACTER ARCHIVE",
+    siteName: "OFFICIAL LOUNGE",
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
   },
