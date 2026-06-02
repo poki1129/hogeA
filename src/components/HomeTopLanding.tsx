@@ -1,7 +1,7 @@
 "use client";
 
 import { characters } from "@/data/characters";
-import { topBackground, topLandingCopy, topSchedule } from "@/data/topLanding";
+import { getSchedule, topBackground, topLandingCopy } from "@/data/topLanding";
 import { isRemoteImage } from "@/lib/image";
 import { m } from "framer-motion";
 import Image from "next/image";
@@ -53,6 +53,7 @@ export function HomeTopLanding() {
 
   const titleLines = topLandingCopy.title.split("\n");
   const leadLines = topLandingCopy.lead.split("\n");
+  const schedule = getSchedule();
 
   return (
     <section className="relative min-h-screen-safe overflow-hidden">
@@ -154,28 +155,50 @@ export function HomeTopLanding() {
                 SCHEDULE
               </m.h2>
               <ul className="mt-4 min-h-0 flex-1 space-y-4 overflow-y-auto overflow-x-hidden pr-1 text-sm font-extralight leading-snug text-white/70">
-                {topSchedule.map((row, i) => (
-                  <m.li
-                    key={i}
-                    initial={{ opacity: 0, x: 12 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: 0.5 + i * 0.1, ease: EASE }}
-                    className="group border-b border-white/[0.06] pb-4 last:border-0"
-                  >
-                    <p className="text-[10px] tracking-[0.2em] text-white/45 transition-colors group-hover:text-white/70">
-                      {row.date}
-                      {row.time ? ` ${row.time}` : ""}
-                    </p>
-                    <p className="mt-1.5 flex items-center gap-2 tracking-wide transition-colors group-hover:text-white">
-                      <span className="font-normal text-white/90">{row.name}</span>
-                      {row.status ? (
-                        <span className="rounded-sm border border-white/20 px-2 py-0.5 text-[10px] tracking-[0.2em] text-white/70">
-                          {row.status}
-                        </span>
-                      ) : null}
-                    </p>
-                  </m.li>
-                ))}
+                {schedule.map((row, i) => {
+                  const rowBody = (
+                    <>
+                      <p className="text-[10px] tracking-[0.2em] text-white/45 transition-colors group-hover:text-white/70">
+                        {row.date}
+                        {row.time ? ` ${row.time}` : ""}
+                      </p>
+                      <p className="mt-1.5 flex items-center gap-2 tracking-wide transition-colors group-hover:text-white">
+                        <span className="font-normal text-white/90">{row.name}</span>
+                        {row.status ? (
+                          <span className="rounded-sm border border-white/20 px-2 py-0.5 text-[10px] tracking-[0.2em] text-white/70">
+                            {row.status}
+                          </span>
+                        ) : null}
+                      </p>
+                    </>
+                  );
+
+                  return (
+                    <m.li
+                      key={i}
+                      initial={{ opacity: 0, x: 12 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.6, delay: 0.5 + i * 0.1, ease: EASE }}
+                      className="group border-b border-white/[0.06] pb-4 last:border-0"
+                    >
+                      {row.characterId ? (
+                        <button
+                          type="button"
+                          onMouseEnter={() => addPreload(row.characterId!)}
+                          onFocus={() => addPreload(row.characterId!)}
+                          onClick={() =>
+                            router.push(`/spotlight?id=${encodeURIComponent(row.characterId!)}`)
+                          }
+                          className="block w-full cursor-pointer text-left"
+                        >
+                          {rowBody}
+                        </button>
+                      ) : (
+                        rowBody
+                      )}
+                    </m.li>
+                  );
+                })}
               </ul>
             </section>
           </div>

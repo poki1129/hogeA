@@ -6,9 +6,9 @@ import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { cn } from "@/lib/cn";
 
-// 「TOP」は左上のワードマーク（CHARACTER ARCHIVE）がホーム導線を兼ねるため省略
+// 「TOP」は左上のワードマークがホーム導線を兼ねるためメニューからは省略
 const links = [
-  { href: "/characters", label: "CHARACTERS" },
+  { href: "/characters", label: "CAST" },
   { href: "/gallery", label: "GALLERY" },
   { href: "/about", label: "ABOUT" },
   { href: "/contact", label: "CONTACT" },
@@ -91,11 +91,11 @@ export function HoverTopNav() {
             />
             <span
               className={cn(
-                "text-[10px] font-light tracking-[0.38em] [text-shadow:0_1px_10px_rgba(0,0,0,0.55)] transition-colors duration-300 group-hover:text-white/95 group-focus-visible:text-white/95 md:text-[11px]",
-                isHome ? "text-white/90" : "text-white/60",
+                "text-[10px] font-light tracking-[0.38em] [text-shadow:0_1px_10px_rgba(0,0,0,0.55)] transition-colors duration-300 group-hover:text-white group-focus-visible:text-white md:text-[11px]",
+                "text-white",
               )}
             >
-              CHARACTER ARCHIVE
+              TOP
             </span>
           </Link>
 

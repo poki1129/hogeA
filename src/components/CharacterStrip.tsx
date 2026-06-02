@@ -79,8 +79,8 @@ export function CharacterStrip({ characters, activeId, onSelect, onPreload }: Pr
       className="pointer-events-auto fixed bottom-0 left-0 right-0 z-20 border-t border-white/[0.06] bg-gradient-to-t from-black via-black/90 to-transparent pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-10"
     >
       <div className="mx-auto max-w-6xl px-4">
-        <p className="mb-3 hidden text-center text-[9px] font-light tracking-[0.5em] text-white/35 md:block">
-          SELECT CHARACTER
+        <p className="mb-3 hidden text-center text-[13.5px] font-light tracking-[0.5em] text-white/35 md:block">
+          Cast List
         </p>
         <m.div
           ref={scrollRef}

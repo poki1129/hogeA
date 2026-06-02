@@ -261,6 +261,11 @@ export function getCharacterById(id: string): Character | undefined {
   return characters.find((c) => c.id === id);
 }
 
+/** 表示名（name）からキャラクターを引く。スケジュールの名前照合などに使用 */
+export function getCharacterByName(name: string): Character | undefined {
+  return characters.find((c) => c.name === name);
+}
+
 export function getAllGalleryImages(): { src: string; characterName: string; id: string }[] {
   const out: { src: string; characterName: string; id: string }[] = [];
   for (const c of characters) {
